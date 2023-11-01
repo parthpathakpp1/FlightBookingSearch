@@ -1,13 +1,56 @@
 import React,{useState} from 'react';
-
+import { result } from '../data/data.js';
 const Search = () => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenTo, setIsOpenTo] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTermTo, setSearchTermTo] = useState('');
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    }
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const toggleDropdownTo = () => {
+    setIsOpenTo(!isOpenTo);
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setIsOpen(true);
+  };
+
+  const handleSearchTo = (e) => {
+    setSearchTermTo(e.target.value);
+    setIsOpenTo(true);
+  };
+
+
+  const handleResultClick = (selectedResult) => {
+    setSearchTerm(selectedResult.Code);
+    setIsOpen(false);
+  };
+  
+  const handleResultClickTo = (selectedResult) => {
+    setSearchTermTo(selectedResult.Code); 
+    setIsOpenTo(false);
+  };
+
+  const filteredResults = result.filter((item) =>
+    item.City.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredResultsTo = result.filter((item) =>
+  item.City.toLowerCase().includes(searchTermTo.toLowerCase())
+);
+
+const handleIconClick = () => {
+  const temp = searchTerm;
+  setSearchTerm(searchTermTo);
+  setSearchTermTo(temp);
+};
+
   return (
-     <div className="flex justify-center items-center h-screen">
+     <div className="flex justify-center items-center h-screen bg-grey">
      
      <div className="pt-8 pb-10 p-relative px-10 px-4--xs pt-4--xs pb-4--xs home-search-banner" style={{ background: 'rgb(255, 255, 255)', border: '1px solid rgb(230, 230, 230)', boxShadow: 'rgba(0, 0, 0, 0.04) 0px 8px 16px', borderRadius: '12px' }}>
       <div className='text-center mb-8'>
@@ -45,20 +88,55 @@ const Search = () => {
               </svg>
             </div>
             </div>
-            <input
-              className="w-100p fs-4 fw-500 c-neutral-500"
-              placeholder="Where from?"
-              value=""
-              style={{ border: 'none' }}
-            />
+            <div className="relative">
+          <input
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            placeholder="Where from?"
+            value={searchTerm}
+            onChange={handleSearch}
+            onClick={toggleDropdown}
+          />
+          {isOpen && (
+            <div className="absolute w-full max-h-96 overflow-y-auto bg-white border border-gray-300 rounded-md mt-1" style={{ width: '550px' }}>
+              {filteredResults.slice(0, 5).map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleResultClick(item)}
+                  className="flex items-center py-2 px-4 hover:bg-gray-100 cursor-pointer"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6l3 1.5V18H9v-4.5L12 12V6z"
+                    />
+                  </svg>
+                  <div className="flex-1">
+                    <p className="text-lg font-semibold">{item.City}</p>
+                    <p className="text-sm text-gray-500">{`${item.Code} - ${item.Country}`}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+          
           </div>
+     
           <div className="p-relative">
             <div
               className="bc-grey-10 bl bw-1 d-block flex-1"
   
             ></div>
             
-            <div className="mx-4 p-absolute nl-8 t-2 z-10">
+            <div className="mx-4 p-absolute nl-8 t-2 z-10" onClick={handleIconClick}>
               <svg
                 width="32"
                 height="32"
@@ -146,13 +224,45 @@ const Search = () => {
               </svg>
             </div>
             </div>
-            <input
-              className="w-100p fs-4 fw-500 c-neutral-500"
-              placeholder="Where to?"
-              value=""
-              style={{ border: 'none' }}
-              autoComplete="off"
-            />
+            <div className="relative">
+              <input
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Where to?"
+                value={searchTermTo}
+                onChange={handleSearchTo}
+                onClick={toggleDropdownTo}
+              />
+              {isOpenTo && (
+                <div className="absolute w-full max-h-96 overflow-y-auto bg-white border border-gray-300 rounded-md mt-1" style={{ width: '550px' }}>
+                  {filteredResultsTo.slice(0, 5).map((item, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleResultClickTo(item)}
+                      className="flex items-center py-2 px-4 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6l3 1.5V18H9v-4.5L12 12V6z"
+                        />
+                      </svg>
+                      <div className="flex-1">
+                        <p className="text-lg font-semibold">{item.City}</p>
+                        <p className="text-sm text-gray-500">{`${item.Code} - ${item.Country}`}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className='flex mt-10'>
