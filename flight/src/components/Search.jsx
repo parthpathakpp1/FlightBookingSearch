@@ -111,7 +111,7 @@ const handleModalClose = () => {
             onClick={toggleDropdown}
           />
           {isOpen && (
-            <div className="md:absolute max-h-96  bg-white border border-gray-300 rounded-md mt-1 w-full overflow-auto" style={{width:"550px"}} >
+            <div className="md:absolute max-h-96  bg-white border border-gray-300 rounded-md mt-1 w-full overflow-auto"  >
               {filteredResults.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
@@ -247,7 +247,7 @@ const handleModalClose = () => {
                 onClick={toggleDropdownTo}
               />
               {isOpenTo && (
-                <div className=" md:absolute w-full max-h-96  bg-white border border-gray-300 rounded-md mt-1 overflow-auto" style={{width:"550px"}}  >
+                <div className=" md:absolute w-full max-h-96  bg-white border border-gray-300 rounded-md mt-1 overflow-auto"   >
                   {filteredResultsTo.slice(0, 5).map((item, index) => (
                     <div
                       key={index}
