@@ -4,13 +4,14 @@ import Modal from 'react-modal';
 
 
 const Search = () => {
+   // State variables
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTo, setIsOpenTo] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermTo, setSearchTermTo] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
+   // Toggling dropdown menus
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -18,7 +19,8 @@ const Search = () => {
   const toggleDropdownTo = () => {
     setIsOpenTo(!isOpenTo);
   };
-
+   
+   // Handling search inputs
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setIsOpen(true);
@@ -29,7 +31,7 @@ const Search = () => {
     setIsOpenTo(true);
   };
 
-
+   // Handling click on search results
   const handleResultClick = (selectedResult) => {
     setSearchTerm(selectedResult.Code);
     setIsOpen(false);
@@ -39,7 +41,8 @@ const Search = () => {
     setSearchTermTo(selectedResult.Code); 
     setIsOpenTo(false);
   };
-
+   
+  // Filtering results based on search term
   const filteredResults = result.filter((item) =>
     item.City.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -53,7 +56,7 @@ const handleIconClick = () => {
   setSearchTerm(searchTermTo);
   setSearchTermTo(temp);
 };
-
+  // Handling modal open and close
 const handleModalOpen = () => {
   setIsModalOpen(true);
 };
@@ -65,13 +68,15 @@ const handleModalClose = () => {
 
   return (
      <div className="flex justify-center items-center h-screen bg-grey overflow-hidden">
-     
+       {/* Main search section */}
      <div className="pt-8 pb-10 p-relative px-10 px-4--xs pt-4--xs pb-4--xs home-search-banner" style={{ background: 'rgb(255, 255, 255)', border: '1px solid rgb(230, 230, 230)', boxShadow: 'rgba(0, 0, 0, 0.04) 0px 8px 16px', borderRadius: '12px' }}>
       <div className='text-center mb-8'>
+       {/* Title */}
         <h1 className='text-5xl'>Book <span className='text-orange-500'> Flight</span></h1>
         
       </div>
      <div className="flex flex-row items-center mt-5 space-x-4 mb-10">
+     {/* Fare type buttons */}
           <button className="py-1 px-3 border border-green-500 hover:border-orange-500 text-green-500 hover:text-orange-500 font-semibold rounded-md">
             Regular fare
           </button>
@@ -85,7 +90,7 @@ const handleModalClose = () => {
             Armed forces fare
           </button>
         </div>
-        
+            {/* Dropdown for 'Where from' input */}
         <div className="dropdown-container h-13 bc-neutral-100 flex ba mb-5 relative"  style={{ border: '1px solid #e2e8f0' }}>
      
           <div className="field-1 flex flex-middle p-relative pr-4 w-100p ">
@@ -103,6 +108,7 @@ const handleModalClose = () => {
             </div>
             </div>
             <div className="relative ">
+                {/* 'Where from' input field */}
           <input
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             placeholder="Where from?"
@@ -110,7 +116,9 @@ const handleModalClose = () => {
             onChange={handleSearch}
             onClick={toggleDropdown}
           />
+           {/* Dropdown list for search results */}
           {isOpen && (
+            
             <div className="md:absolute max-h-96  bg-white border border-gray-300 rounded-md mt-1 w-full overflow-auto"  >
               {filteredResults.slice(0, 5).map((item, index) => (
                 <div
@@ -149,7 +157,7 @@ const handleModalClose = () => {
               className="bc-grey-10 bl bw-1 d-block flex-1"
   
             ></div>
-            
+              {/* Icon to switch search terms */}
             <div className="md:hidden mx-4 p-absolute nl-8 t-2 z-10" onClick={handleIconClick}>
               <svg
                 width="32"
@@ -239,6 +247,7 @@ const handleModalClose = () => {
             </div>
             </div>
             <div className="relative">
+             {/* 'Where to' input field */}
               <input
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                 placeholder="Where to?"
@@ -246,6 +255,7 @@ const handleModalClose = () => {
                 onChange={handleSearchTo}
                 onClick={toggleDropdownTo}
               />
+                  {/* Dropdown list for search results */}
               {isOpenTo && (
                 <div className=" md:absolute w-full max-h-96  bg-white border border-gray-300 rounded-md mt-1 overflow-auto"   >
                   {filteredResultsTo.slice(0, 5).map((item, index) => (
@@ -280,7 +290,8 @@ const handleModalClose = () => {
           </div>
         </div>
         <div className='flex mt-10'>
-       
+      
+       {/* Search button */}
     <div className="field-3 flex flex-middle p-relative pr-4 w-100p">
       <button
         className="py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-md"
@@ -289,7 +300,7 @@ const handleModalClose = () => {
         Search Flight
       </button>
     </div>
-
+        {/* Date input field */}
         <div className="field-4 flex flex-middle p-relative pr-4 w-100p ">
           <input
             className="w-100p fs-4 fw-500 c-neutral-500 py-2 pl-3 pr-10 rounded-md"
@@ -298,6 +309,9 @@ const handleModalClose = () => {
             style={{ border: '1px solid #e2e8f0' }}
           />
         </div>
+
+        
+        {/* Modal for successful booking */}
         <Modal
       isOpen={isModalOpen}
       onRequestClose={handleModalClose}
