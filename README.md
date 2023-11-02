@@ -27,6 +27,12 @@ Before you begin, make sure you have the following installed:
 
 1. npm run dev
 
+## Preview
+![ss1](https://github.com/parthpathakpp1/FlightBookingSearch/assets/85991449/01b348b3-f618-430d-b27b-276ab37ec046)
+![ss2](https://github.com/parthpathakpp1/FlightBookingSearch/assets/85991449/ca61ab2a-fd5b-46dd-bc31-ee746b14cc73)
+![ss3](https://github.com/parthpathakpp1/FlightBookingSearch/assets/85991449/c39cad7a-bdad-4633-b282-ef60f3c9bae8)
+
+
 ## Usage
 
 ### User Guide
