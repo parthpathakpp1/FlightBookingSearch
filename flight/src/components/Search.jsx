@@ -1,10 +1,15 @@
 import React,{useState} from 'react';
 import { result } from '../data/data.js';
+import Modal from 'react-modal';
+
+
 const Search = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTo, setIsOpenTo] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermTo, setSearchTermTo] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -49,8 +54,17 @@ const handleIconClick = () => {
   setSearchTermTo(temp);
 };
 
+const handleModalOpen = () => {
+  setIsModalOpen(true);
+};
+
+const handleModalClose = () => {
+  setIsModalOpen(false);
+};
+
+
   return (
-     <div className="flex justify-center items-center h-screen bg-grey">
+     <div className="flex justify-center items-center h-screen bg-grey overflow-hidden">
      
      <div className="pt-8 pb-10 p-relative px-10 px-4--xs pt-4--xs pb-4--xs home-search-banner" style={{ background: 'rgb(255, 255, 255)', border: '1px solid rgb(230, 230, 230)', boxShadow: 'rgba(0, 0, 0, 0.04) 0px 8px 16px', borderRadius: '12px' }}>
       <div className='text-center mb-8'>
@@ -72,7 +86,7 @@ const handleIconClick = () => {
           </button>
         </div>
         
-        <div className="dropdown-container h-13 bc-neutral-100 flex ba mb-5"  style={{ border: '1px solid #e2e8f0' }}>
+        <div className="dropdown-container h-13 bc-neutral-100 flex ba mb-5 relative"  style={{ border: '1px solid #e2e8f0' }}>
      
           <div className="field-1 flex flex-middle p-relative pr-4 w-100p ">
           <div className="flex items-center">
@@ -88,7 +102,7 @@ const handleIconClick = () => {
               </svg>
             </div>
             </div>
-            <div className="relative">
+            <div className="relative ">
           <input
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             placeholder="Where from?"
@@ -97,7 +111,7 @@ const handleIconClick = () => {
             onClick={toggleDropdown}
           />
           {isOpen && (
-            <div className="absolute w-full max-h-96 overflow-y-auto bg-white border border-gray-300 rounded-md mt-1" style={{ width: '550px' }}>
+            <div className="md:absolute max-h-96  bg-white border border-gray-300 rounded-md mt-1 w-full overflow-auto" style={{width:"550px"}} >
               {filteredResults.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
@@ -136,7 +150,7 @@ const handleIconClick = () => {
   
             ></div>
             
-            <div className="mx-4 p-absolute nl-8 t-2 z-10" onClick={handleIconClick}>
+            <div className="md:hidden mx-4 p-absolute nl-8 t-2 z-10" onClick={handleIconClick}>
               <svg
                 width="32"
                 height="32"
@@ -233,7 +247,7 @@ const handleIconClick = () => {
                 onClick={toggleDropdownTo}
               />
               {isOpenTo && (
-                <div className="absolute w-full max-h-96 overflow-y-auto bg-white border border-gray-300 rounded-md mt-1" style={{ width: '550px' }}>
+                <div className=" md:absolute w-full max-h-96  bg-white border border-gray-300 rounded-md mt-1 overflow-auto" style={{width:"550px"}}  >
                   {filteredResultsTo.slice(0, 5).map((item, index) => (
                     <div
                       key={index}
@@ -266,11 +280,15 @@ const handleIconClick = () => {
           </div>
         </div>
         <div className='flex mt-10'>
-        <div className="field-3 flex flex-middle p-relative pr-4 w-100p">
-          <button className="py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-md">
-            Search Flight
-          </button>
-        </div>
+       
+    <div className="field-3 flex flex-middle p-relative pr-4 w-100p">
+      <button
+        className="py-2 px-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-md"
+        onClick={handleModalOpen}
+      >
+        Search Flight
+      </button>
+    </div>
 
         <div className="field-4 flex flex-middle p-relative pr-4 w-100p ">
           <input
@@ -280,9 +298,40 @@ const handleIconClick = () => {
             style={{ border: '1px solid #e2e8f0' }}
           />
         </div>
+        <Modal
+      isOpen={isModalOpen}
+      onRequestClose={handleModalClose}
+      contentLabel="Flight Booked Successfully"
+      style={{
+        content: {
+          width: '300px',
+          height: '150px',
+          margin: 'auto',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+      }}
+    >
+      <div className="flex items-center justify-center">
+        <div className="bg-green-500 rounded-md p-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-white mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <p className="text-white text-sm">Flight Booked Successfully</p>
+        </div>
+      </div>
+    </Modal>
 </div>
       </div>
     </div>
+    
   );
 };
 
